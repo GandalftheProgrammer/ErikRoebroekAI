@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erik Roebroek – AI & Automation Speaker, Trainer and Builder</title>
+  <style>
+
+    /* ============================================================
+       VARIABLES
+    ============================================================ */
+    :root {
+      --ivory:       #F6F1EB;
+      --ivory-deep:  #EDE7DF;
+      --dark:        #1D1B16;
+      --dark-mid:    #2A2720;
+      --text:        #1D1B16;
+      --text-muted:  #7A7269;
+      --text-faint:  #ADA89F;
+      --border:      #DDD6CC;
+      --max-w:       1160px;
+      --ease:        0.16s ease;
+    }
+
+    /* ============================================================
+       RESET
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+                   Arial, sans-serif;
+      background: var(--ivory);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-block;
+      padding: 15px 36px;
+      border-radius: 6px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background var(--ease), transform var(--ease), box-shadow var(--ease);
+    }
+    .btn-ivory {
+      background: var(--ivory);
+      color: var(--dark);
+    }
+    .btn-ivory:hover {
+      background: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
+    }
+    .btn-dark {
+      background: var(--dark);
+      color: var(--ivory);
+    }
+    .btn-dark:hover {
+      background: var(--dark-mid);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 300;
+      transition: background var(--ease), border-color 0.3s ease;
+    }
+    .site-nav.is-top {
+      background: transparent;
+      border-bottom: 1px solid transparent;
+    }
+    .site-nav.is-scrolled {
+      background: rgba(246, 241, 235, 0.93);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 48px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      transition: color var(--ease);
+    }
+    .site-nav.is-top      .nav-logo { color: var(--ivory); }
+    .site-nav.is-scrolled .nav-logo { color: var(--text); }
+
+    .nav-cta {
+      font-size: 0.86rem;
+      font-weight: 600;
+      padding: 9px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background var(--ease), color var(--ease), border-color var(--ease);
+    }
+    .site-nav.is-top .nav-logo,
+    .site-nav.is-top .nav-cta {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .site-nav.is-scrolled .nav-cta {
+      background: var(--dark);
+      color: var(--ivory);
+      border: 1.5px solid var(--dark);
+    }
+    .site-nav.is-scrolled .nav-cta:hover { background: var(--dark-mid); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      background-image: url('Hero2.png');
+      background-size: cover;
+      background-position: center center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(12, 10, 7, 0.90) 0%,
+        rgba(12, 10, 7, 0.78) 30%,
+        rgba(12, 10, 7, 0.42) 55%,
+        rgba(12, 10, 7, 0.08) 100%
+      );
+    }
+    .hero-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12, 10, 7, 0.55) 0%, transparent 28%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: left;
+      padding: 0 64px;
+      max-width: 740px;
+      color: #fff;
+    }
+
+    .hero-eyebrow {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(246, 241, 235, 0.55);
+      margin-bottom: 10px;
+    }
+
+    .hero-role {
+      font-size: 0.93rem;
+      color: rgba(246, 241, 235, 0.54);
+      margin-bottom: 26px;
+      font-weight: 400;
+    }
+
+    .hero-headline {
+      font-size: clamp(3rem, 6.5vw, 5.2rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+      color: #fff;
+      margin-bottom: 28px;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.35);
+    }
+
+    .hero-subline {
+      font-size: 1.15rem;
+      color: rgba(246, 241, 235, 0.82);
+      line-height: 1.72;
+      margin-bottom: 48px;
+      max-width: 460px;
+    }
+
+    .hero-tagline {
+      display: block;
+      margin-top: 18px;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(246, 241, 235, 0.42);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-scroll span {
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(246, 241, 235, 0.28);
+    }
+    .scroll-arrow {
+      width: 18px;
+      height: 18px;
+      border-right: 1.5px solid rgba(246, 241, 235, 0.28);
+      border-bottom: 1.5px solid rgba(246, 241, 235, 0.28);
+      transform: rotate(45deg);
+      animation: bounce 1.9s ease infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translate(0, 0);     opacity: 0.28; }
+      50%       { transform: rotate(45deg) translate(3px, 3px); opacity: 0.65; }
+    }
+
+    /* ============================================================
+       SHARED TEXT STYLE
+       Used consistently for body text across all sections
+    ============================================================ */
+    .body-text {
+      font-size: 1.08rem;
+      color: var(--text-muted);
+      line-height: 1.78;
+    }
+
+    /* ============================================================
+       SECTION HEADINGS — shared large style
+    ============================================================ */
+    .section-heading {
+      font-size: clamp(2.2rem, 3.5vw, 3.1rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    /* ============================================================
+       REALITY
+    ============================================================ */
+    .reality {
+      padding: 112px 0;
+      background: var(--ivory);
+      border-bottom: 1px solid var(--border);
+    }
+    .reality-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+    .reality-left {
+      position: sticky;
+      top: 88px;
+    }
+    .reality-list { list-style: none; }
+    .reality-item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .reality-item:first-child { border-top: 1px solid var(--border); }
+    .reality-num {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+      padding-top: 3px;
+    }
+
+    /* ============================================================
+       SERVICE SECTIONS
+    ============================================================ */
+    .svc-section {
+      background: var(--ivory);          /* default: light */
+      border-bottom: 1px solid var(--border);
+    }
+    .svc-section--deep {
+      background: var(--ivory-deep);
+    }
+    .svc-section--dark {
+      background: var(--dark);
+    }
+    .svc-section--dark .svc-split-text {
+      background: var(--dark);
+    }
+    .svc-section--dark .section-heading {
+      color: var(--ivory);
+    }
+    .svc-section--dark .svc-intro-label {
+      font-size: 1.08rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+      color: rgba(246, 241, 235, 0.82);
+    }
+    .svc-section--dark .svc-list li {
+      color: rgba(246, 241, 235, 0.82);
+    }
+    .svc-section--dark .svc-list li::before {
+      color: rgba(246, 241, 235, 0.20);
+    }
+
+    /* Light dark filter on speaking and training photos */
+    .svc-full-photo .svc-photo-block::after,
+    .svc-split-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.18);
+      pointer-events: none;
+    }
+
+    /* Shared photo block */
+    .svc-photo-block {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--dark-mid);
+      position: relative;
+      background-size: cover;
+      background-position: center center;
+    }
+    .svc-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .svc-photo-placeholder svg { opacity: 0.16; }
+    .svc-photo-placeholder span {
+      font-size: 0.68rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(246, 241, 235, 0.25);
+      font-weight: 500;
+    }
+
+    /* FULL layout — Speaking & Building (text above, 16:9 photo below) */
+    .svc-full-text {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 88px 48px 52px;
+    }
+    .svc-full-text .svc-title {
+      margin-bottom: 24px;
+      max-width: 560px;
+    }
+    .svc-full-text .body-text {
+      max-width: 560px;
+    }
+    .svc-full-photo {
+      max-width: var(--max-w);
+      margin: 0 auto 88px;
+      padding: 0 48px;
+    }
+    .svc-full-photo .svc-photo-block {
+      aspect-ratio: 16 / 9;
+    }
+
+    /* SPLIT layout — Training (photo left, text right) */
+    .svc-split {
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      min-height: 560px;
+    }
+    .svc-split-photo {
+      position: relative;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center center;
+      background-color: var(--dark-mid);
+      isolation: isolate;
+    }
+    .svc-split-photo .svc-photo-placeholder {
+      position: absolute;
+      inset: 0;
+    }
+    .svc-split-text {
+      padding: 72px 60px 72px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .svc-split-text .svc-title {
+      margin-bottom: 24px;
+    }
+
+    /* Bullet list — Training */
+    .svc-intro-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 18px;
+    }
+    .svc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .svc-list li {
+      font-size: 1.08rem;
+      color: var(--text-muted);
+      line-height: 1.78;
+      padding-left: 20px;
+      position: relative;
+    }
+    .svc-list li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--border);
+    }
+
+    /* ============================================================
+       WHY IT MATTERS
+    ============================================================ */
+    .why-matters {
+      padding: 120px 0;
+      background: var(--dark);
+    }
+    .why-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    .why-quote {
+      font-size: clamp(1.4rem, 2.6vw, 1.96rem);
+      font-weight: 500;
+      line-height: 1.56;
+      letter-spacing: -0.01em;
+      color: var(--ivory);
+    }
+    .why-quote .dim { color: rgba(246, 241, 235, 0.28); }
+
+    /* ============================================================
+       ABOUT
+    ============================================================ */
+    .about {
+      padding: 96px 0;
+      background: var(--ivory);
+      border-top: 1px solid var(--border);
+    }
+    .about-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    .about-heading {
+      font-size: clamp(2.2rem, 3.5vw, 3.1rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    .about-text {
+      font-size: 1.08rem;
+      color: var(--text-muted);
+      line-height: 1.78;
+      margin-bottom: 28px;
+    }
+    .about-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: border-color var(--ease);
+    }
+    .about-link:hover { border-color: var(--text); }
+
+    /* ============================================================
+       FINAL CTA
+    ============================================================ */
+    .final-cta {
+      padding: 120px 0;
+      background: var(--dark);
+      border-top: 1px solid rgba(246, 241, 235, 0.06);
+    }
+    .final-cta-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 0 48px;
+      text-align: center;
+    }
+    .cta-heading {
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -0.038em;
+      line-height: 1.06;
+      color: var(--ivory);
+      margin-bottom: 22px;
+    }
+    .cta-subline {
+      font-size: 1.08rem;
+      color: rgba(246, 241, 235, 0.46);
+      line-height: 1.78;
+      margin-bottom: 48px;
+    }
+    .cta-note {
+      margin-top: 22px;
+      font-size: 0.76rem;
+      color: rgba(246, 241, 235, 0.22);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(246, 241, 235, 0.06);
+      padding: 26px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .footer-copy {
+      font-size: 0.74rem;
+      color: rgba(246, 241, 235, 0.18);
+    }
+
+    /* ============================================================
+       RESPONSIVE — 960px
+    ============================================================ */
+    @media (max-width: 960px) {
+      .reality-inner {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+      .reality-left { position: static; }
+
+      .svc-split {
+        grid-template-columns: 1fr;
+        min-height: unset;
+      }
+      .svc-split-photo {
+        aspect-ratio: 16 / 9;
+      }
+      .svc-split-text { padding: 56px 48px; }
+    }
+
+    /* ============================================================
+       RESPONSIVE — 640px
+    ============================================================ */
+    @media (max-width: 640px) {
+      .nav-inner { padding: 0 24px; }
+      .hero-content { padding: 0 24px; }
+
+      .reality-inner,
+      .svc-full-text,
+      .svc-full-photo,
+      .why-inner,
+      .about-inner,
+      .final-cta-inner { padding-left: 24px; padding-right: 24px; }
+
+      .reality       { padding: 80px 0; }
+      .svc-full-text { padding-top: 60px; padding-bottom: 36px; }
+      .svc-full-photo { margin-bottom: 60px; }
+      .svc-split-text { padding: 44px 24px; }
+      .svc-photo-block { border-radius: 6px; }
+      .why-matters { padding: 88px 0; }
+      .about       { padding: 72px 0; }
+      .final-cta   { padding: 88px 0; }
+      footer       { padding: 22px 24px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav is-top" id="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Erik Roebroek</a>
+      <a href="#contact" class="nav-cta">Let's talk AI</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-photo"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-role">AI &amp; Automation Speaker, Trainer and Builder</p>
+      <h1 class="hero-headline">Don't watch<br>the rocket launch.<br>Be on it.</h1>
+      <p class="hero-subline">I help small and medium sized organizations understand, adopt and implement AI in a way that actually works.</p>
+      <a href="#contact" class="btn btn-ivory">Let's talk AI</a>
+      <span class="hero-tagline">Speaking · Training · Automation</span>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- REALITY -->
+    <section class="reality" aria-labelledby="reality-heading">
+      <div class="reality-inner">
+        <div class="reality-left">
+          <h2 class="section-heading" id="reality-heading">The reality of AI right now</h2>
+        </div>
+        <ul class="reality-list" role="list">
+          <li class="reality-item">
+            <span class="reality-num">01</span>
+            <span class="body-text">AI tools are evolving at unprecedented speed.</span>
+          </li>
+          <li class="reality-item">
+            <span class="reality-num">02</span>
+            <span class="body-text">Most organizations are experimenting.</span>
+          </li>
+          <li class="reality-item">
+            <span class="reality-num">03</span>
+            <span class="body-text">Very few are integrating AI in a structured way.</span>
+          </li>
+          <li class="reality-item">
+            <span class="reality-num">04</span>
+            <span class="body-text">The gap between awareness and real implementation is growing.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SPEAKING -->
+    <section class="svc-section svc-section--deep" aria-labelledby="svc-speaking">
+      <div class="svc-full-text">
+        <h2 class="section-heading svc-title" id="svc-speaking">Speaking</h2>
+        <p class="body-text">
+          I speak about what AI really is — and what it isn't. About the gap between hype
+          and practical, implementable reality. About AI agents, real-world workflows and
+          what the future of work will actually look like for the people in your organization.
+          And about why waiting is no longer a safe option — because while you're deciding,
+          others are moving.
+        </p>
+      </div>
+      <div class="svc-full-photo">
+        <div class="svc-photo-block"
+             style="aspect-ratio:16/9;
+                    background-image:url('Impact-20112025-Kim%20Balster-1889.jpg');">
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAINING -->
+    <section class="svc-section svc-section--dark" aria-labelledby="svc-training">
+      <div class="svc-split">
+        <div class="svc-split-photo"
+             style="background-image:url('Maudstaassenfotografie-4292.jpg');">
+        </div>
+        <div class="svc-split-text">
+          <h2 class="section-heading svc-title" id="svc-training">Training</h2>
+          <p class="svc-intro-label">I train teams to:</p>
+          <ul class="svc-list" role="list">
+            <li>Use AI tools effectively</li>
+            <li>Prompt with clarity and structure</li>
+            <li>Integrate AI into daily workflows</li>
+            <li>Understand risks and limitations</li>
+            <li>Build internal confidence</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUILDING & AUTOMATION -->
+    <section class="svc-section svc-section--deep" aria-labelledby="svc-building">
+      <div class="svc-full-text">
+        <h2 class="section-heading svc-title" id="svc-building">Building &amp; automation</h2>
+        <p class="body-text">
+          I design and build AI-assisted workflows, smart dashboards and process automations
+          that fit the way your organization actually works. From integrating the right tools
+          to building human-in-the-loop systems that keep people in control — I create
+          practical things that get used, not shelved.
+        </p>
+      </div>
+      <div class="svc-full-photo">
+        <img src="Screenshot 2026-02-22 180238.png"
+             alt="AI automation workflow diagram"
+             style="width:100%;display:block;border-radius:10px;">
+      </div>
+    </section>
+
+    <!-- WHY IT MATTERS -->
+    <section class="why-matters" aria-label="Why it matters">
+      <div class="why-inner">
+        <p class="why-quote">
+          <span class="dim">The question is not whether AI will change your organization: it will.</span>
+          <br><br>
+          The question is whether you're ready to embrace a future full of possibilities.
+        </p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" aria-label="About Erik">
+      <div class="about-inner">
+        <h2 class="about-heading">About Erik</h2>
+        <p class="about-text">
+          Background in engineering, project management and professional training.<br>
+          From analysis to practice with a heart for people.
+        </p>
+        <a href="#" class="about-link">
+          View my LinkedIn profile
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <path d="M2.5 6.5h8M7 2.5l4 4-4 4" stroke="currentColor" stroke-width="1.4"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta" id="contact" aria-labelledby="cta-heading">
+      <div class="final-cta-inner">
+        <h2 class="cta-heading" id="cta-heading">Ready to get&nbsp;started?</h2>
+        <p class="cta-subline">Let's explore how speaking, training or automation could help your organization work smarter with AI.</p>
+        <a href="#" class="btn btn-ivory">Let's talk AI</a>
+        <p class="cta-note">Drop me a message and we'll take it from there.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p class="footer-copy">&copy; 2026 Erik Roebroek. All rights reserved.</p>
+  </footer>
+
+  <script>
+    (function () {
+      var nav = document.getElementById('site-nav');
+      var hero = document.querySelector('.hero');
+      function updateNav() {
+        if (window.scrollY > hero.offsetHeight * 0.12) {
+          nav.classList.replace('is-top', 'is-scrolled');
+        } else {
+          nav.classList.replace('is-scrolled', 'is-top');
+        }
+      }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+    })();
+  </script>
+
+</body>
+</html>
